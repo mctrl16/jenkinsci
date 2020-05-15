@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+
+  jenkins:
+    image: jenkins/jenkins
+    container_name: jenkins
+    environment:
+      - DOCKER_HOST=tcp://localhost:2375
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - jenkins_net
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
+        driver: local
+
+networks:
+  jenkins_net:
+    name: jenkins_net
+    driver: bridge
